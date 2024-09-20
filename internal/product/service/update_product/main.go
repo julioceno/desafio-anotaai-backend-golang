@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	category_service "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/service"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
 	product_domain "github.com/julioceno/desafio-anotaai-backend-golang/internal/product/domain"
 	product_repository "github.com/julioceno/desafio-anotaai-backend-golang/internal/product/repository"
@@ -17,7 +18,6 @@ var (
 	internalLogger *zap.Logger
 )
 
-// TODO: adicionar validação pra verificar se a categoria que o produto ta sendo inserido, realmente existe
 func NewLogger() {
 	internalLogger = logger.NewLoggerWithPrefix("updateProductService")
 	if internalLogger == nil {
@@ -27,24 +27,28 @@ func NewLogger() {
 
 func Run(id *string, data product_domain.UpdateProduct) (*product_domain.Product, *util.PatternError) {
 	internalLogger.Info("Updating product...")
+	if _, patternError := category_service.Service.GetCategory(data.CategoryId); patternError != nil {
+		return nil, patternError
+	}
+
 	ctxMongo, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	productToUpdate, err := getOldProduct(id, &ctxMongo)
-	if err != nil {
+	productToUpdate, patternError := getOldProduct(id, &ctxMongo)
+	if patternError != nil {
 		return nil, &util.PatternError{
 			Code:         http.StatusBadRequest,
-			MessageError: err.Error(),
+			MessageError: patternError.Error(),
 		}
 	}
 
 	updateFields(&data, productToUpdate)
-	productUpdated, err := product_repository.Repository.Update(id, ctxMongo, productToUpdate)
-	if err != nil {
-		internalLogger.Error("Ocurred error when try update product", zap.NamedError("error", err))
+	productUpdated, patternError := product_repository.Repository.Update(id, ctxMongo, productToUpdate)
+	if patternError != nil {
+		internalLogger.Error("Ocurred error when try update product", zap.NamedError("error", patternError))
 		return nil, &util.PatternError{
 			Code:         http.StatusBadRequest,
-			MessageError: err.Error(),
+			MessageError: patternError.Error(),
 		}
 	}
 

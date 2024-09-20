@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	category_service "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/service"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
 	product_domain "github.com/julioceno/desafio-anotaai-backend-golang/internal/product/domain"
 	product_repository "github.com/julioceno/desafio-anotaai-backend-golang/internal/product/repository"
@@ -25,6 +26,9 @@ func NewLogger() {
 
 func Run(data product_domain.CreateProduct) (*product_domain.Product, *util.PatternError) {
 	internalLogger.Info("Creating product...")
+	if _, patternError := category_service.Service.GetCategory(&data.CategoryId); patternError != nil {
+		return nil, patternError
+	}
 
 	productToCreate := product_domain.Product{
 		Title:       data.Title,

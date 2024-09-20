@@ -11,9 +11,13 @@ import (
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/util"
 )
 
-type CategoryService struct {}
+type _CategoryService struct{}
 
-func NewCategoryService() *CategoryService {
+var (
+	Service *_CategoryService
+)
+
+func NewCategoryService() *_CategoryService {
 	category_repository.NewCategoryRepository()
 
 	create_category.NewLogger()
@@ -22,25 +26,26 @@ func NewCategoryService() *CategoryService {
 	delete_category.NewLogger()
 	fetch_category.NewLogger()
 
-	return &CategoryService{}
+	Service = &_CategoryService{}
+	return Service
 }
 
-func (cs *CategoryService) Create(data category_domain.CreateCategory) (*category_domain.Category, *util.PatternError) {
+func (cs *_CategoryService) Create(data category_domain.CreateCategory) (*category_domain.Category, *util.PatternError) {
 	return create_category.Run(data)
 }
 
-func (cs *CategoryService) Update(id *string, data category_domain.UpdateCategory) (*category_domain.Category, *util.PatternError) {
+func (cs *_CategoryService) Update(id *string, data category_domain.UpdateCategory) (*category_domain.Category, *util.PatternError) {
 	return update_category.Run(id, data)
 }
 
-func (cs *CategoryService) GetCategory(id *string) (*category_domain.Category, *util.PatternError) {
+func (cs *_CategoryService) GetCategory(id *string) (*category_domain.Category, *util.PatternError) {
 	return get_category.Run(id)
 }
 
-func (cs *CategoryService) DeleteCategory(id *string) *util.PatternError {
+func (cs *_CategoryService) DeleteCategory(id *string) *util.PatternError {
 	return delete_category.Run(id)
 }
 
-func (cs *CategoryService) FetchCategory(filter *category_domain.Category, sortQuery *util.SortQuery) (*util.ResponseFormat, *util.PatternError) {
+func (cs *_CategoryService) FetchCategory(filter *category_domain.Category, sortQuery *util.SortQuery) (*util.ResponseFormat, *util.PatternError) {
 	return fetch_category.Run(filter, sortQuery)
 }

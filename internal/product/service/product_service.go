@@ -11,9 +11,13 @@ import (
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/util"
 )
 
-type ProductService struct{}
+type _ProductService struct{}
 
-func NewProductService() *ProductService {
+var (
+	Service *_ProductService
+)
+
+func NewProductService() *_ProductService {
 	product_repository.NewProductRepository()
 
 	create_product.NewLogger()
@@ -22,25 +26,26 @@ func NewProductService() *ProductService {
 	delete_product.NewLogger()
 	fetch_product.NewLogger()
 
-	return &ProductService{}
+	Service = &_ProductService{}
+	return Service
 }
 
-func (cs *ProductService) Create(data product_domain.CreateProduct) (*product_domain.Product, *util.PatternError) {
+func (cs *_ProductService) Create(data product_domain.CreateProduct) (*product_domain.Product, *util.PatternError) {
 	return create_product.Run(data)
 }
 
-func (cs *ProductService) Update(id *string, data product_domain.UpdateProduct) (*product_domain.Product, *util.PatternError) {
+func (cs *_ProductService) Update(id *string, data product_domain.UpdateProduct) (*product_domain.Product, *util.PatternError) {
 	return update_product.Run(id, data)
 }
 
-func (cs *ProductService) Getproduct(id *string) (*product_domain.Product, *util.PatternError) {
+func (cs *_ProductService) Getproduct(id *string) (*product_domain.Product, *util.PatternError) {
 	return get_product.Run(id)
 }
 
-func (cs *ProductService) Deleteproduct(id *string) *util.PatternError {
+func (cs *_ProductService) Deleteproduct(id *string) *util.PatternError {
 	return delete_product.Run(id)
 }
 
-func (cs *ProductService) Fetchproduct(filter *product_domain.Product, sortQuery *util.SortQuery) (*util.ResponseFormat, *util.PatternError) {
+func (cs *_ProductService) Fetchproduct(filter *product_domain.Product, sortQuery *util.SortQuery) (*util.ResponseFormat, *util.PatternError) {
 	return fetch_product.Run(filter, sortQuery)
 }
