@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter/service"
 	category_domain "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/domain"
 	category_repository "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/repository"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
@@ -47,10 +48,10 @@ func Run(id *string, data category_domain.UpdateCategory) (*category_domain.Cate
 		}
 	}
 
+	catalog_emiter.Run(&categoryUpdated.OwnerId)
 	internalLogger.Info("Category updated")
 	return categoryUpdated, nil
 }
-
 
 func getOldCategory(id *string, ctxMongo *context.Context) (*category_domain.Category, error) {
 	internalLogger.Info("Searching category...")

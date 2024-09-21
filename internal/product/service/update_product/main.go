@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"time"
 
+	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter/service"
 	category_service "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/service"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
 	product_domain "github.com/julioceno/desafio-anotaai-backend-golang/internal/product/domain"
@@ -52,6 +53,7 @@ func Run(id *string, data product_domain.UpdateProduct) (*product_domain.Product
 		}
 	}
 
+	catalog_emiter.Run(&productUpdated.OwnerId)
 	internalLogger.Info("Product updated")
 	return productUpdated, nil
 }

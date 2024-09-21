@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter/service"
 	category_domain "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/domain"
 	category_repository "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/repository"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
@@ -44,6 +45,7 @@ func Run(data category_domain.CreateCategory) (*category_domain.Category, *util.
 		}
 	}
 
+	catalog_emiter.Run(&categoryCreated.OwnerId)
 	internalLogger.Info("Category Created")
 	return categoryCreated, nil
 }

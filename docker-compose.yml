@@ -6,5 +6,18 @@ services:
       - mongo-data:/data:db
     ports:
       - 27017:27017
+  localstack:
+    container_name: localstack-main
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4510-4559:4510-4559" 
+    environment:
+      - SERVICES=sqs,lambda
+      - DEBUG=-0
+    volumes:
+      - localstack-data:/data/lib/localstack     
+      - /var/run/docker.sock:/var/run/docker.sock
 volumes:
   mongo-data:
+  localstack-data:

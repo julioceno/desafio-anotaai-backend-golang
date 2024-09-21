@@ -5,7 +5,9 @@ import (
 	"net/http"
 	"time"
 
+	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter/service"
 	category_repository "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/repository"
+	"github.com/julioceno/desafio-anotaai-backend-golang/internal/category/service/get_category"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/util"
 	"go.uber.org/zap"
@@ -24,6 +26,10 @@ func NewLogger() {
 
 func Run(id *string) *util.PatternError {
 	internalLogger.Info("Delete category...")
+
+	internalLogger.Info("Getting current category to emiter catalog after...")
+	currentCategory, _ := get_category.Run(id)
+
 	ctxMongo, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
@@ -36,6 +42,11 @@ func Run(id *string) *util.PatternError {
 		}
 	}
 
+	catalog_emiter.Run(&currentCategory.OwnerId)
 	internalLogger.Info("Category deleted")
 	return nil
+}
+
+func callCatalogEmiter() {
+
 }
