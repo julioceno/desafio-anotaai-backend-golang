@@ -1,7 +1,7 @@
 package catalog
 
 import (
-	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter/service"
+	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog/service"
 	"go.uber.org/zap"
 )
 

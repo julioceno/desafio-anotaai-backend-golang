@@ -21,7 +21,7 @@ func NewHandler() {
 	internalLogger = logger.NewLoggerWithPrefix("sns")
 	svc = sns.New(aws_session.AwsSession)
 
-	catalogEmiter := os.Getenv("catalogEmiter_TOPIC")
+	catalogEmiter := os.Getenv("CATALOG_EMITER_TOPIC")
 	util.ThrowErrorIfEnvNotExists("CATALOG_EMITER_TOPIC", catalogEmiter)
 	CATALOG_EMITER = &catalogEmiter
 }

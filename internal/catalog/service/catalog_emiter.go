@@ -2,6 +2,7 @@ package catalog_emiter
 
 import (
 	"encoding/json"
+	"fmt"
 
 	sns_client "github.com/julioceno/desafio-anotaai-backend-golang/internal/config/aws/sns"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
@@ -13,7 +14,7 @@ var (
 )
 
 type _messagePattern struct {
-	ownerId *string
+	OwnerId *string `json:"ownerId"`
 }
 
 func NewLogger() {
@@ -24,16 +25,18 @@ func NewLogger() {
 }
 
 func Run(ownerId *string) error {
-	internalLogger.Info("Publish message in topic")
+	internalLogger.Info(fmt.Sprintf("Publish message in topic with owner id %s", *ownerId))
 	message := _messagePattern{ownerId}
-	jsonBody, err := json.Marshal(message)
 
+	jsonBody, err := json.Marshal(message)
 	if err != nil {
 		internalLogger.Error("Ocurred error when try convet message to json", zap.NamedError("error", err))
 		return err
 	}
 
 	jsonFormatted := string(jsonBody)
+	internalLogger.Info(jsonFormatted)
+
 	sns_client.PublishMessage(sns_client.CATALOG_EMITER, &jsonFormatted)
 	return nil
 }

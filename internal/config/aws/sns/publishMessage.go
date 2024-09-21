@@ -7,6 +7,8 @@ import (
 
 func PublishMessage(topicArn *string, message *string) {
 	internalLogger.Info("Sending message")
+
+	internalLogger.Info(*message)
 	publishParams := &sns.PublishInput{
 		Message:  message,
 		TopicArn: topicArn,

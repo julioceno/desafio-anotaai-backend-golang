@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/gin-gonic/gin"
-	catalog "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter"
+	catalog "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/category"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/product"

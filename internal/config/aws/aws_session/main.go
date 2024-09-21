@@ -22,7 +22,7 @@ var (
 	AwsSession *session.Session
 )
 
-func NewHandler() *session.Session {
+func NewHandler() {
 	envs := getEnvs()
 
 	logger.Info("Creating aws session")
@@ -33,7 +33,7 @@ func NewHandler() *session.Session {
 	}))
 	logger.Info("Session created, create queue instance")
 
-	return sess
+	AwsSession = sess
 }
 
 func getEnvs() Envs {

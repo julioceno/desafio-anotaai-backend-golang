@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter/service"
+	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog/service"
 	category_domain "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/domain"
 	category_repository "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/repository"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
