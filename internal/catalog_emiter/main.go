@@ -1,7 +1,7 @@
 package catalog
 
 import (
-	"github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter"
+	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog_emiter/service"
 	"go.uber.org/zap"
 )
 
@@ -10,5 +10,5 @@ var (
 )
 
 func NewHandler() {
-	catalog_emiter.NewHandler()
+	catalog_emiter.NewLogger()
 }

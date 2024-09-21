@@ -1,13 +1,13 @@
 package aws_session
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
+	"github.com/julioceno/desafio-anotaai-backend-golang/internal/util"
 )
 
 type Envs struct {
@@ -38,19 +38,19 @@ func NewHandler() *session.Session {
 
 func getEnvs() Envs {
 	awsUrl := os.Getenv("AWS_URL")
-	throwErrorIfEnvNotExists("AWS_URL", awsUrl)
+	util.ThrowErrorIfEnvNotExists("AWS_URL", awsUrl)
 
 	awsRegion := os.Getenv("AWS_REGION")
-	throwErrorIfEnvNotExists("AWS_REGION", awsRegion)
+	util.ThrowErrorIfEnvNotExists("AWS_REGION", awsRegion)
 
 	awsAccessKeyID := os.Getenv("AWS_ACCESS_KEY_ID")
-	throwErrorIfEnvNotExists("AWS_ACCESS_KEY_ID", awsAccessKeyID)
+	util.ThrowErrorIfEnvNotExists("AWS_ACCESS_KEY_ID", awsAccessKeyID)
 
 	awsSecretKey := os.Getenv("AWS_SECRET_KEY")
-	throwErrorIfEnvNotExists("AWS_SECRET_KEY", awsSecretKey)
+	util.ThrowErrorIfEnvNotExists("AWS_SECRET_KEY", awsSecretKey)
 
 	awsSessionToken := os.Getenv("AWS_SESSION_TOKEN")
-	throwErrorIfEnvNotExists("AWS_SESSION_TOKEN", awsSessionToken)
+	util.ThrowErrorIfEnvNotExists("AWS_SESSION_TOKEN", awsSessionToken)
 
 	return Envs{
 		awsUrl:          awsUrl,
@@ -58,11 +58,5 @@ func getEnvs() Envs {
 		awsAccessKeyID:  awsAccessKeyID,
 		awsSecretKey:    awsSecretKey,
 		awsSessionToken: awsSessionToken,
-	}
-}
-
-func throwErrorIfEnvNotExists(key string, value string) {
-	if value == "" {
-		logger.Fatal(fmt.Sprintf("%s não existe", key), nil)
 	}
 }

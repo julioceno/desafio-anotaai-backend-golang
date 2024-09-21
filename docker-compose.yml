@@ -7,13 +7,12 @@ services:
     ports:
       - 27017:27017
   localstack:
-    container_name: localstack-main
     image: localstack/localstack
     ports:
       - "127.0.0.1:4566:4566"
       - "127.0.0.1:4510-4559:4510-4559" 
     environment:
-      - SERVICES=sqs,lambda
+      - SERVICES=sns,sqs,lambda
       - DEBUG=-0
     volumes:
       - localstack-data:/data/lib/localstack     

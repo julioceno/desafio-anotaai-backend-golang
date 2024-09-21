@@ -34,6 +34,6 @@ func Run(ownerId *string) error {
 	}
 
 	jsonFormatted := string(jsonBody)
-	sns_client.PublishMessage(&sns_client.CATALOG_EMITER, &jsonFormatted)
+	sns_client.PublishMessage(sns_client.CATALOG_EMITER, &jsonFormatted)
 	return nil
 }
