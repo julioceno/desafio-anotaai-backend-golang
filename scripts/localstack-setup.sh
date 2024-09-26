@@ -34,8 +34,16 @@ set_queue_in_topic() {
   --notification-endpoint arn:aws:sqs:us-east-1:000000000000:${QUEUE_NAME}
 }
 
+create_s3() {
+  local S3_NAME_TO_CREATE=$1
+
+  awslocal s3api create-bucket \
+  --bucket ${S3_NAME_TO_CREATE}
+}
+
 create_topic "catalog-emit"
 create_queue "catalog-emit-consumer"
-
 set_queue_in_topic "catalog-emit" "catalog-emit-consumer"
+
+create_s3 catalog
 
