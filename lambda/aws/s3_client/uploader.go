@@ -20,7 +20,7 @@ func UploaderJson(bucketName *string, key *string, body interface{}) error {
 	jsonReader := bytes.NewReader(jsonData)
 	_, err = svc.PutObject(&s3.PutObjectInput{
 		Bucket: bucketName,
-		Key:    key,
+		Key:    aws.String(fmt.Sprintf("%s.json", *key)),
 		Body:   aws.ReadSeekCloser(jsonReader),
 	})
 

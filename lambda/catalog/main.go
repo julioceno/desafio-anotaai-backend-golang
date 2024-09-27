@@ -2,7 +2,6 @@ package catalog
 
 import (
 	"context"
-	"fmt"
 	"lambda/db"
 	"slices"
 	"sync"
@@ -55,15 +54,15 @@ func Create(ownerId *string) (*Catalog, error) {
 		Catalog: categoriesFormatted,
 	}
 
-	fmt.Println(categories, products)
 	return &catalog, nil
 }
 
 func getModels(ownerId *string) ([]db.Category, []db.Product, error) {
-	filter := bson.E{Key: "ownerId", Value: *ownerId}
+	filter := bson.D{
+		bson.E{Key: "ownerId", Value: *ownerId},
+	}
 	ctxMongo, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	fmt.Println(filter)
 
 	var categories []db.Category
 	var products []db.Product
@@ -85,7 +84,7 @@ func getModels(ownerId *string) ([]db.Category, []db.Product, error) {
 	return categories, products, err
 }
 
-func getCategories(ctxMongo context.Context, filter primitive.E) ([]db.Category, error) {
+func getCategories(ctxMongo context.Context, filter primitive.D) ([]db.Category, error) {
 	cursor, err := db.CategoryCollection.Find(ctxMongo, filter)
 	if err != nil {
 		return nil, err
@@ -103,7 +102,7 @@ func getCategories(ctxMongo context.Context, filter primitive.E) ([]db.Category,
 	return categories, nil
 }
 
-func getProducts(ctxMongo context.Context, filter primitive.E) ([]db.Product, error) {
+func getProducts(ctxMongo context.Context, filter primitive.D) ([]db.Product, error) {
 	cursor, err := db.ProductCollection.Find(ctxMongo, filter)
 	if err != nil {
 		return nil, err

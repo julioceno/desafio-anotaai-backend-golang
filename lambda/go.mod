@@ -3,6 +3,7 @@ module lambda
 go 1.22.5
 
 require (
+	github.com/aws/aws-lambda-go v1.47.0
 	github.com/aws/aws-sdk-go v1.55.5
 	github.com/joho/godotenv v1.5.1
 	github.com/julioceno/ticket-easy/event-manager v0.0.0-20240902033127-c1d0cfd7ad70
