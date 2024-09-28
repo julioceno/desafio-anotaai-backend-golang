@@ -36,6 +36,6 @@ func NewHandler() {
 }
 
 func GetMongoCollection(db *mongo.Client, nameCollection string) *mongo.Collection {
-	eventsCollection := db.Database("events").Collection(nameCollection)
-	return eventsCollection
+	collection := db.Database("catalog").Collection(nameCollection)
+	return collection
 }

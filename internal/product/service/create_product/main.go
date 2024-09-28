@@ -27,7 +27,8 @@ func NewLogger() {
 
 func Run(data product_domain.CreateProduct) (*product_domain.Product, *util.PatternError) {
 	internalLogger.Info("Creating product...")
-	if _, patternError := category_service.Service.GetCategory(&data.CategoryId); patternError != nil {
+	categoryRecord, patternError := category_service.Service.GetCategory(&data.CategoryId)
+	if patternError != nil {
 		return nil, patternError
 	}
 
@@ -36,7 +37,7 @@ func Run(data product_domain.CreateProduct) (*product_domain.Product, *util.Patt
 		CategoryId:  data.CategoryId,
 		Price:       data.Price,
 		Description: data.Description,
-		OwnerId:     data.OwnerId,
+		OwnerId:     categoryRecord.OwnerId,
 	}
 
 	ctxMongo, cancel := context.WithTimeout(context.Background(), 5*time.Second)

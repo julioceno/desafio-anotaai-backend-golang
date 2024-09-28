@@ -4,9 +4,9 @@ import (
 	"context"
 	"fmt"
 	"lambda/util"
+	"log"
 	"os"
 
-	"github.com/julioceno/ticket-easy/event-manager/config/logger"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -45,11 +45,11 @@ func NewHandler() {
 	ctx := context.Background()
 	db, err := mongo.Connect(ctx, options.Client().ApplyURI(databaseUrl))
 	if err != nil {
-		logger.Fatal("Occurred an error with mongo connection", err)
+		log.Fatal("Occurred an error with mongo connection", err)
 	}
 
 	if err := db.Ping(ctx, options.Client().ReadPreference); err != nil {
-		logger.Fatal("Occured an error in make ping in mongo connection", err)
+		log.Fatal("Occured an error in make ping in mongo connection", err)
 	}
 
 	fmt.Println("Connection created, connecting with models...")

@@ -136,7 +136,6 @@ func findAndRemoveProduct(categoryId *string, products *[]db.Product) []Product 
 		}
 		productsFromCategory = append(productsFromCategory, productFormatted)
 		slices.Delete(*products, index, index+1)
-		break
 	}
 
 	return productsFromCategory

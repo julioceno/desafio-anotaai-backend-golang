@@ -12,6 +12,7 @@ func PublishMessage(topicArn *string, message *string) {
 	publishParams := &sns.PublishInput{
 		Message:  message,
 		TopicArn: topicArn,
+		
 	}
 
 	_, err := svc.Publish(publishParams)

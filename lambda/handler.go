@@ -9,11 +9,9 @@ import (
 	"lambda/aws/sqs_client"
 	"lambda/catalog"
 	"lambda/db"
-	"log"
 	"sync"
 
 	"github.com/aws/aws-lambda-go/events"
-	"github.com/joho/godotenv"
 )
 
 type MessageWrapper struct {
@@ -35,10 +33,6 @@ type InnerMessage struct {
 var wg sync.WaitGroup
 
 func handler(ctx context.Context) (events.APIGatewayProxyResponse, error) {
-	if err := godotenv.Load(); err != nil {
-		log.Fatal("Error loading .env file", err)
-	}
-
 	startDepencies()
 	for {
 		messages := sqs_client.ReceveiMessage(sqs_client.QueueUrlCatalogEmitConsumer)

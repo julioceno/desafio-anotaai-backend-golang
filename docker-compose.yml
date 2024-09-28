@@ -12,7 +12,7 @@ services:
       - "127.0.0.1:4566:4566"
       - "127.0.0.1:4510-4559:4510-4559" 
     environment:
-      - SERVICES=sns,sqs,lambda
+      - SERVICES=iam,sns,sqs,lambda,logs
       - DEBUG=-0
     volumes:
       - localstack-data:/data/lib/localstack     
