@@ -18,7 +18,7 @@ var (
 )
 
 func NewLogger() {
-	internalLogger = logger.NewLoggerWithPrefix("deleteCategoryService")
+	internalLogger = logger.NewLoggerWithPrefix("getCategoryService")
 	if internalLogger == nil {
 		logger.Logger.Error("Not can get internal logger")
 	}

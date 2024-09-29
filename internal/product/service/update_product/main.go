@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog/service"
+	catalog_service "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog/service"
 	category_service "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/service"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
 	product_domain "github.com/julioceno/desafio-anotaai-backend-golang/internal/product/domain"
@@ -28,8 +28,10 @@ func NewLogger() {
 
 func Run(id *string, data product_domain.UpdateProduct) (*product_domain.Product, *util.PatternError) {
 	internalLogger.Info("Updating product...")
-	if _, patternError := category_service.Service.GetCategory(data.CategoryId); patternError != nil {
-		return nil, patternError
+	if data.CategoryId != nil {
+		if _, patternError := category_service.Service.GetCategory(data.CategoryId); patternError != nil {
+			return nil, patternError
+		}
 	}
 
 	ctxMongo, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -53,7 +55,7 @@ func Run(id *string, data product_domain.UpdateProduct) (*product_domain.Product
 		}
 	}
 
-	catalog_emiter.Run(&productUpdated.OwnerId)
+	catalog_service.Service.Create(&productUpdated.OwnerId)
 	internalLogger.Info("Product updated")
 	return productUpdated, nil
 }

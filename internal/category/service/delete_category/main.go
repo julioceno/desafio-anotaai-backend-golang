@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog/service"
+	catalog_emit "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog/service"
 	category_repository "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/repository"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/category/service/get_category"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
@@ -42,7 +42,7 @@ func Run(id *string) *util.PatternError {
 		}
 	}
 
-	catalog_emiter.Run(&currentCategory.OwnerId)
+	catalog_emit.Service.Create(&currentCategory.OwnerId)
 	internalLogger.Info("Category deleted")
 	return nil
 }

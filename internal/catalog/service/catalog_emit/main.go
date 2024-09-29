@@ -1,4 +1,4 @@
-package catalog_emiter
+package catalog_emit
 
 import (
 	"encoding/json"

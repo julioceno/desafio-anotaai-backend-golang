@@ -49,7 +49,7 @@ func NewHandler(r *gin.Engine) {
 	})
 
 	productRoutes.PATCH("/:id", func(ctx *gin.Context) {
-		id, err := util.GetIdParam(ctx)
+		id, err := util.GetValueByParams(ctx, "id")
 		if err != nil {
 			internalLogger.Error("PUT - Id not exists", zap.NamedError("error", err))
 			util.SendError(ctx, http.StatusBadRequest, err.Error())
@@ -81,7 +81,7 @@ func NewHandler(r *gin.Engine) {
 	})
 
 	productRoutes.GET("/:id", func(ctx *gin.Context) {
-		id, err := util.GetIdParam(ctx)
+		id, err := util.GetValueByParams(ctx, "id")
 		if err != nil {
 			internalLogger.Error("GET/:id - Id not exists", zap.NamedError("error", err))
 			util.SendError(ctx, http.StatusBadRequest, err.Error())
@@ -100,7 +100,7 @@ func NewHandler(r *gin.Engine) {
 	})
 
 	productRoutes.DELETE("/:id", func(ctx *gin.Context) {
-		id, err := util.GetIdParam(ctx)
+		id, err := util.GetValueByParams(ctx, "id")
 		if err != nil {
 			internalLogger.Error("DELETE - Id not exists", zap.NamedError("error", err))
 			util.SendError(ctx, http.StatusBadRequest, err.Error())

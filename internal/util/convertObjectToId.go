@@ -1,6 +1,8 @@
 package util
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
+import (
+	"go.mongodb.org/mongo-driver/bson/primitive"
+)
 
 func ConvertToObjectId(id *string) (*primitive.ObjectID, error) {
 	objId, err := primitive.ObjectIDFromHex(*id)

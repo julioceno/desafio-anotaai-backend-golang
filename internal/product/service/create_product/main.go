@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	catalog_emiter "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog/service"
+	catalog_service "github.com/julioceno/desafio-anotaai-backend-golang/internal/catalog/service"
 	category_service "github.com/julioceno/desafio-anotaai-backend-golang/internal/category/service"
 	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
 	product_domain "github.com/julioceno/desafio-anotaai-backend-golang/internal/product/domain"
@@ -52,7 +52,7 @@ func Run(data product_domain.CreateProduct) (*product_domain.Product, *util.Patt
 		}
 	}
 
-	catalog_emiter.Run(&productCreated.OwnerId)
+	catalog_service.Service.Create(&productCreated.OwnerId)
 	internalLogger.Info("Product Created")
 	return productCreated, nil
 }

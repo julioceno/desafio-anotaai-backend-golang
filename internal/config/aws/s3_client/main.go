@@ -2,12 +2,15 @@ package s3_client
 
 import (
 	"fmt"
-	"lambda/aws/aws_session"
-	"lambda/util"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/s3"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
+	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/aws/aws_session"
+	"github.com/julioceno/desafio-anotaai-backend-golang/internal/config/logger"
+	"github.com/julioceno/desafio-anotaai-backend-golang/internal/util"
+	"go.uber.org/zap"
 )
 
 type Envs struct {
@@ -16,15 +19,21 @@ type Envs struct {
 }
 
 var (
-	svc                 *s3.S3
+	svc            *s3.S3
+	internalLogger *zap.Logger
+	downloader     *s3manager.Downloader
+
 	CATALOG_BUCKET_NAME *string
 )
 
 func NewHandler() {
+	internalLogger = logger.NewLoggerWithPrefix("s3")
+
 	envs := getEnvs()
 	svc = s3.New(aws_session.AwsSession, &aws.Config{
 		Endpoint: aws.String(envs.awsEndpoints3),
 	})
+	downloader = s3manager.NewDownloader(aws_session.AwsSession)
 
 	CATALOG_BUCKET_NAME = &envs.catalogBucketName
 	_, err := svc.HeadBucket(&s3.HeadBucketInput{

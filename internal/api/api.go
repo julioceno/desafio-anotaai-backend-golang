@@ -15,7 +15,7 @@ func NewHandler() {
 	r := gin.Default()
 	category.NewHandler(r)
 	product.NewHandler(r)
-	catalog.NewHandler()
+	catalog.NewHandler(r)
 
 	port := getPort()
 	logger.Info(fmt.Sprintf("Init server in port %s", port))
