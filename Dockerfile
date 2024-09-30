@@ -8,7 +8,7 @@ RUN go mod download && go mod verify
 
 COPY . .
 
-RUN go build -o /bin/desafio-anotaai-backend-golang ./cmd/desafio-anotaai-backend-golang/desafio-anotaai-backend-golang.go
+RUN go build -o /bin/desafio-anotaai-backend-golang ./cmd/api/main.go
 
 FROM scratch
 
