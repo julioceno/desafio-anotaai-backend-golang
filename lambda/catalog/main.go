@@ -3,7 +3,6 @@ package catalog
 import (
 	"context"
 	"lambda/db"
-	"slices"
 	"sync"
 	"time"
 
@@ -123,7 +122,7 @@ func getProducts(ctxMongo context.Context, filter primitive.D) ([]db.Product, er
 func findAndRemoveProduct(categoryId *string, products *[]db.Product) []Product {
 	productsFromCategory := []Product{}
 
-	for index, product := range *products {
+	for _, product := range *products {
 		isThisCategory := product.CategoryId == *categoryId
 		if !isThisCategory {
 			continue
@@ -135,7 +134,6 @@ func findAndRemoveProduct(categoryId *string, products *[]db.Product) []Product 
 			Price:       product.Price,
 		}
 		productsFromCategory = append(productsFromCategory, productFormatted)
-		slices.Delete(*products, index, index+1)
 	}
 
 	return productsFromCategory

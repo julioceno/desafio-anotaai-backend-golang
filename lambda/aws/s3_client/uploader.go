@@ -15,12 +15,13 @@ func UploaderJson(bucketName *string, key *string, body interface{}) error {
 		return err
 	}
 
-	fmt.Println(*key)
-	fmt.Println(body)
+	keyFormatted := fmt.Sprintf("%s.json", *key)
+	fmt.Printf("JSON to storage %s in key: %s \n", body, keyFormatted)
+
 	jsonReader := bytes.NewReader(jsonData)
 	_, err = svc.PutObject(&s3.PutObjectInput{
 		Bucket: bucketName,
-		Key:    aws.String(fmt.Sprintf("%s.json", *key)),
+		Key:    aws.String(keyFormatted),
 		Body:   aws.ReadSeekCloser(jsonReader),
 	})
 
@@ -28,5 +29,6 @@ func UploaderJson(bucketName *string, key *string, body interface{}) error {
 		return err
 	}
 
+	fmt.Println("storage finished")
 	return nil
 }
